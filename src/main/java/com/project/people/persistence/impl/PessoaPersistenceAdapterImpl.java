@@ -16,17 +16,16 @@ public class PessoaPersistenceAdapterImpl implements PessoaPersistenceAdapter {
 
     @Override
     public Pessoa save(Pessoa pessoa) {
-        return null;
+        return this.pessoaJpaRepository.save(pessoa);
     }
 
     @Override
     public Pessoa findByName(String nome) {
-        return null;
+        return this.pessoaJpaRepository.findByNome(nome);
     }
-
     @Override
     public List<Pessoa> getAll() {
-        return null;
+        return this.pessoaJpaRepository.findAll();
     }
 
 }

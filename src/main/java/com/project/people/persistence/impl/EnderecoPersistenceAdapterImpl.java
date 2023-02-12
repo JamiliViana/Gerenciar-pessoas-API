@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class EnderecoPersistenceAdapterImpl implements EnderecoPersistenceAdapter {
@@ -16,11 +17,16 @@ public class EnderecoPersistenceAdapterImpl implements EnderecoPersistenceAdapte
 
     @Override
     public Endereco save(Endereco endereco) {
-        return null;
+        return this.enderecoJpaRepository.save(endereco);
     }
 
     @Override
-    public List<Endereco> findByPessoaNome(String nome) {
-        return null;
+    public Optional<List<Endereco>> findByPessoaNome(String nome) {
+        return this.enderecoJpaRepository.findByPessoaNome(nome);
+    }
+
+    @Override
+    public Optional<Endereco> findById(int idEndereco) {
+        return this.enderecoJpaRepository.findById(idEndereco);
     }
 }

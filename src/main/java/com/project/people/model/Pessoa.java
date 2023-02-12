@@ -9,14 +9,20 @@ import java.util.List;
 @Table(name = "pessoa")
 public class Pessoa {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idPessoa;
+
     private String nome;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "data_nascimento")
     private Date dataNascimento;
 
 
     @OneToMany(mappedBy = "pessoa")
     private List<Endereco> enderecos;
+
+    public Pessoa() {}
 
     public Pessoa(String nome, Date dataNascimento) {
         this.nome = nome;
