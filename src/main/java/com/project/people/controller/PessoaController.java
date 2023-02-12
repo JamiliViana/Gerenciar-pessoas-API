@@ -1,8 +1,10 @@
 package com.project.people.controller;
 
+import com.project.people.controller.request.PessoaRequest;
 import com.project.people.model.Endereco;
 import com.project.people.model.Pessoa;
 import com.project.people.service.PessoaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,13 @@ public class PessoaController {
     @Autowired
     private PessoaService pessoaService;
 
+    private Pessoa mapPessoaRequestToDomain(PessoaRequest pessoaRequest) {
+        Pessoa pessoa = new Pessoa(
+                pessoaRequest.getNome(),
+                pessoaRequest.getDataNascimento());
+        return pessoa;
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -26,11 +35,10 @@ public class PessoaController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Pessoa createPessoa (@RequestBody Pessoa pessoa){
-        return this.pessoaService.createPessoa(pessoa);
+    public Pessoa createPessoa (@RequestBody PessoaRequest pessoaRequest){
+        return this.pessoaService.createPessoa(mapPessoaRequestToDomain(pessoaRequest));
     }
 
     @GetMapping("/{nomePessoa}")
@@ -41,8 +49,8 @@ public class PessoaController {
 
     @PutMapping("/{nomePessoa}")
     @ResponseStatus(HttpStatus.OK)
-    public Pessoa editPessoaByNome (@PathVariable String nomePessoa, @RequestBody Pessoa pessoa){
-        return this.pessoaService.updatePessoa(nomePessoa,pessoa);
+    public Pessoa editPessoaByNome (@PathVariable String nomePessoa, @RequestBody PessoaRequest pessoaRequest){
+        return this.pessoaService.updatePessoa(nomePessoa,mapPessoaRequestToDomain(pessoaRequest));
     }
 
     @PutMapping("/enderecoPrincipal/{nomePessoa}/{idEndereco}")
