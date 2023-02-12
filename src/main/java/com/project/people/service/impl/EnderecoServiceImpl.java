@@ -1,5 +1,6 @@
 package com.project.people.service.impl;
 
+import com.project.people.config.advice.exception.PessoaNotFoundException;
 import com.project.people.model.Endereco;
 import com.project.people.model.Pessoa;
 import com.project.people.persistence.EnderecoPersistenceAdapter;
@@ -22,6 +23,7 @@ public class EnderecoServiceImpl implements EnderecoService {
     @Override
     public Endereco createEndereco(Endereco endereco, String nomePessoa) {
         Pessoa pessoa = this.pessoaPersistenceAdapter.findByName(nomePessoa);
+        if(pessoa == null){throw new PessoaNotFoundException();}
         endereco.setPessoa(pessoa);
         return this.enderecoPersistenceAdapter.save(endereco);
     }
@@ -30,6 +32,7 @@ public class EnderecoServiceImpl implements EnderecoService {
     @Override
     public List<Endereco> getAllEnderecosByNomePessoa(String nomePessoa) {
         Pessoa pessoaToGetEnderecos = this.pessoaPersistenceAdapter.findByName(nomePessoa);
+        if (pessoaToGetEnderecos == null){throw new PessoaNotFoundException();}
         return pessoaToGetEnderecos.getEnderecos();
     }
 }
