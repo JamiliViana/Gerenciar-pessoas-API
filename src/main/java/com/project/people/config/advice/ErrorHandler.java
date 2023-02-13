@@ -2,6 +2,7 @@ package com.project.people.config.advice;
 
 
 import com.project.people.config.advice.exception.EnderecoNotFoundException;
+import com.project.people.config.advice.exception.IncompleteConstructorException;
 import com.project.people.config.advice.exception.PessoaNotFoundException;
 import com.project.people.model.ErrorMessage;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,12 @@ public class ErrorHandler{
     @ExceptionHandler(EnderecoNotFoundException.class)
     public ResponseEntity<ErrorMessage> EnderecoNotFoundExceptionHandler(Exception exception) {
         return new ResponseEntity<>(new ErrorMessage("Endereço não localizado"), HttpStatus.NOT_FOUND);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IncompleteConstructorException.class)
+    public ResponseEntity<ErrorMessage> IncompleteConstructorExceptionHandler(Exception exception) {
+        return new ResponseEntity<>(new ErrorMessage("Necessário preencher todos os campos"), HttpStatus.BAD_REQUEST);
     }
 
 }

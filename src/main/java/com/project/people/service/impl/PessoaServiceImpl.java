@@ -1,6 +1,7 @@
 package com.project.people.service.impl;
 
 import com.project.people.config.advice.exception.EnderecoNotFoundException;
+import com.project.people.config.advice.exception.IncompleteConstructorException;
 import com.project.people.config.advice.exception.PessoaNotFoundException;
 import com.project.people.model.Endereco;
 import com.project.people.model.Pessoa;
@@ -24,7 +25,12 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Override
     public Pessoa createPessoa(Pessoa pessoa) {
+        validParametersToCreatePessoa(pessoa);
         return this.pessoaPersistenceAdapter.save(pessoa);
+    }
+
+    private void validParametersToCreatePessoa(Pessoa pessoa){
+        if (pessoa.getNome() == null || pessoa.getDataNascimento() == null){throw new IncompleteConstructorException();}
     }
 
     @Override
@@ -62,9 +68,7 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Override
     public List<Pessoa> getAllPessoas() {
-        List<Pessoa> returnGetAll = this.pessoaPersistenceAdapter.getAll();
-        if (returnGetAll.isEmpty()){throw new PessoaNotFoundException();}
-        return returnGetAll;
+        return this.pessoaPersistenceAdapter.getAll();
     }
 
 

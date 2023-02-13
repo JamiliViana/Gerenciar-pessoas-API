@@ -1,5 +1,6 @@
 package com.project.people.service.impl;
 
+import com.project.people.config.advice.exception.IncompleteConstructorException;
 import com.project.people.config.advice.exception.PessoaNotFoundException;
 import com.project.people.model.Endereco;
 import com.project.people.model.Pessoa;
@@ -22,12 +23,18 @@ public class EnderecoServiceImpl implements EnderecoService {
 
     @Override
     public Endereco createEndereco(Endereco endereco, String nomePessoa) {
+        validParametersToCreateEndereco(endereco);
         Pessoa pessoa = this.pessoaPersistenceAdapter.findByName(nomePessoa);
         if(pessoa == null){throw new PessoaNotFoundException();}
         endereco.setPessoa(pessoa);
         return this.enderecoPersistenceAdapter.save(endereco);
     }
 
+    private void validParametersToCreateEndereco(Endereco endereco){
+        if (endereco.getLogradouro() == null || endereco.getCep() == null ||
+                endereco.getCidade() == null || endereco.getNumero() == 0)
+        {throw new IncompleteConstructorException();}
+    }
 
     @Override
     public List<Endereco> getAllEnderecosByNomePessoa(String nomePessoa) {
