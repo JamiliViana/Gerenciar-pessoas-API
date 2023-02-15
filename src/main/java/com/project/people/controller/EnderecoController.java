@@ -27,14 +27,14 @@ public class EnderecoController {
 
     @PostMapping("/{nomePessoa}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Endereco createEndereco (@PathVariable String nomePessoa,@RequestBody EnderecoRequest enderecoRequest){
-        return this.enderecoService.createEndereco(mapEnderecoRequestToDomain(enderecoRequest),nomePessoa);
+    public Endereco createEndereco(@PathVariable String nomePessoa, @RequestBody EnderecoRequest enderecoRequest) {
+        return this.enderecoService.createEndereco(mapEnderecoRequestToDomain(enderecoRequest), nomePessoa);
     }
 
 
     @GetMapping("/{nomePessoa}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Endereco> getAllEnderecosByNomePessoa (@PathVariable String nomePessoa){
+    public List<Endereco> getAllEnderecosByNomePessoa(@PathVariable String nomePessoa) {
         return this.enderecoService.getAllEnderecosByNomePessoa(nomePessoa);
     }
 }

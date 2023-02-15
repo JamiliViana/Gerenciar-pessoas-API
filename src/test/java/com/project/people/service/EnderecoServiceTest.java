@@ -1,6 +1,5 @@
 package com.project.people.service;
 
-
 import com.project.people.config.advice.exception.IncompleteConstructorException;
 import com.project.people.config.advice.exception.PessoaNotFoundException;
 import com.project.people.model.Endereco;

@@ -1,14 +1,18 @@
 package com.project.people.controller.request;
 
-import jakarta.validation.constraints.NotNull;
-
 import java.util.Date;
 
 public class PessoaRequest {
     private String nome;
     private Date dataNascimento;
 
-    public PessoaRequest() {}
+    public PessoaRequest() {
+    }
+
+    public PessoaRequest(String nome, Date dataNascimento) {
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+    }
 
     public String getNome() {
         return nome;
