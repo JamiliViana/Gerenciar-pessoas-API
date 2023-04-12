@@ -1,4 +1,4 @@
-# API paara gerenciar pessoas
+# API para gerenciar pessoas
 
 Este projeto é uma API RESTful desenvolvida em Java para gerenciar pessoas, ela permite:
 -	Criar uma pessoa
